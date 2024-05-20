@@ -5,10 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "db": "npx json-server ../../../../_json_server/products.json"
+
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "json-server": "^1.0.0-beta.0",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
