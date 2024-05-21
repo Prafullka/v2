@@ -9,8 +9,8 @@
         <div class="col-sm-5">wqwq</div>
         <div class="col-sm-5">wqwqef</div>
       </div>
-    <div v-if="info" class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-      <!-- <li v-for="(item, index) in info" :key="index"> -->
+      <div v-if="info" class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
+        <!-- <li v-for="(item, index) in info" :key="index"> -->
         <!-- 
           {"id":"1",
           "title":"iPhone 9",
@@ -36,8 +36,8 @@
                 </div>
                 <a href="shop-single.html">
                   <!-- img -->
-                  <img :src="item.thumbnail" alt="Grocery Ecommerce Template"
-                    class="mb-3 img-fluid">
+                  <img src="#" :data-src="item.thumbnail" alt="Grocery Ecommerce Template"
+                    class="mb-3 img-fluid img-responsive lazy">
                 </a>
                 <!-- action btn -->
                 <div class="card-product-action">
@@ -55,11 +55,12 @@
               <div class="text-small mb-1">
                 <a href="#!" class="text-decoration-none text-muted"><small>Snack &amp; Munchies</small></a>
               </div>
-              <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none"> {{ item.title }} </a></h2>
+              <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none"> {{ item.title }}
+                </a></h2>
               <div>
                 <!-- rating -->
-                
-                <span class="text-muted small">{{item.rating}}</span>
+
+                <span class="text-muted small">{{ item.rating }}</span>
               </div>
               <!-- price -->
               <div class="d-flex justify-content-between align-items-center mt-3">
@@ -83,9 +84,9 @@
             </div>
           </div>
         </div>
-      <!-- </div> -->
+        <!-- </div> -->
+      </div>
     </div>
-  </div>
 
   </div>
 </template>
@@ -128,6 +129,11 @@ export default {
     // console.log("Vue.prototype ($_var_3_name) :", Vue.prototype.$_var_3_name)
   },
   mounted() {
+    console.log("mounted");
+    window.scrollTo(0, 0);
+    window.addEventListener("scroll", this.lazyLoad);
+    // this.lazyLoad();
+    setTimeout(this.lazyLoad)
     axios
       .get('http://localhost:3000/products')
       .then(response => {
@@ -142,12 +148,44 @@ export default {
         this.errored = true
       })
       .finally(() => this.loading = false)
+
+
+
   },
   //   props:{},
   methods: {
     hadleClick() {
       console.log("as")
-    }
+    },
+    lazyLoad: function () {
+      console.log("lazyLoad");
+      let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+      let active = false;
+      if (active === false) {
+        active = true;
+        setTimeout(() => {
+          lazyImages.forEach(function (lazyImage) {
+            if (
+              (
+                lazyImage.getBoundingClientRect().top <= window.innerHeight
+                && lazyImage.getBoundingClientRect().bottom >= 0)
+              && getComputedStyle(lazyImage).display !== "none") {
+              lazyImage.src = lazyImage.dataset.src;
+              lazyImage.classList.remove("lazy");
+              lazyImages = lazyImages.filter(function (image) {
+                return image !== lazyImage;
+              });
+
+              if (lazyImages.length === 0) {
+                window.removeEventListener("scroll", this.lazyLoad);
+              }
+            }
+          });
+          active = false;
+        }, 200)
+
+      }
+    },
   },
   components: {
     // HelloWorld
