@@ -9,8 +9,8 @@
         <div class="col-sm-5">wqwq</div>
         <div class="col-sm-5">wqwqef</div>
       </div>
-      <div v-if="info" class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-        <!-- <li v-for="(item, index) in info" :key="index"> -->
+      <div v-if="getProducts" class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
+        <!-- <li v-for="(item, index) in getProducts" :key="index"> -->
         <!-- 
           {"id":"1",
           "title":"iPhone 9",
@@ -25,7 +25,7 @@
             "https://cdn.dummyjson.com/product-images/1/3.jpg",
             "https://cdn.dummyjson.com/product-images/1/4.jpg","https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"]}
          -->
-        <div class="col-sm-6" v-for="(item, index) in info" :key="index">
+        <div class="col-sm-6" v-for="(item, index) in getProducts" :key="index">
           <!-- card -->
           <div class="card card-product" style="border: solid 1px grey">
             <div class="card-body">
@@ -112,6 +112,10 @@ export default {
   computed: {
     fullName() {
       return this.firstName + this.lastName
+    },
+    getProducts() {
+      // console.log("this.$store.getters.get:", this.$store.getters.get);
+      return this.$store.getters.get
     }
   },
   beforeCreate: function () {
@@ -133,24 +137,27 @@ export default {
     window.scrollTo(0, 0);
     window.addEventListener("scroll", this.lazyLoad);
     // this.lazyLoad();
-    setTimeout(this.lazyLoad)
-    axios
-      .get('http://localhost:3000/products')
-      .then(response => {
-        this.info = response.data;
-        console.log("mounted this :", this)
-        console.log("mounted this.info :", this.info)
-        console.log("Vue.prototype :", Vue.prototype)
-        console.log("Vue.prototype.info :", Vue.prototype.info)
-      })
-      .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false)
-
-
-
+    setTimeout(this.lazyLoad, 100)
+    let switcher = false
+    if (switcher) {
+      axios
+        .get('http://localhost:3000/products?_start=0&_limit=5')
+        // .get('http://localhost:3000/products')
+        .then(response => {
+          this.info = response.data;
+          console.log("mounted this :", this)
+          console.log("mounted this.info :", this.info)
+          console.log("Vue.prototype :", Vue.prototype)
+          console.log("Vue.prototype.info :", Vue.prototype.info)
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
+    } else {
+      this.$store.dispatch('add_products')
+    }
   },
   //   props:{},
   methods: {
@@ -176,9 +183,9 @@ export default {
                 return image !== lazyImage;
               });
 
-              if (lazyImages.length === 0) {
-                window.removeEventListener("scroll", this.lazyLoad);
-              }
+              // if (lazyImages.length === 0) {
+              //   window.removeEventListener("scroll", this.lazyLoad);
+              // }
             }
           });
           active = false;
