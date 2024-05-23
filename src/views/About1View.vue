@@ -69,7 +69,8 @@
                   <span class="text-decoration-line-through text-muted">$24</span>
                 </div>
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
-                @click="showProductDetails(item.id)" >
+                @click="setSelected_product_id(item.id)"
+                 >
                   Launch demo modal
                 </button>
                 <!-- btn -->
@@ -88,11 +89,11 @@
             </div>
           </div>
         </div>
-        <!-- </div> -->
+        <!-- </div> -->   
       </div>
     </div>
 
-    <ProductDetailPopup  :product="selectedProduct">a</ProductDetailPopup>
+    <ProductDetailPopup  :product="selectedProduct()">a</ProductDetailPopup>
   </div>
 </template>
 
@@ -192,6 +193,9 @@ export default {
 
       }
     },
+    setSelected_product_id(id){
+      this.$store.dispatch('setSelected_product_id',id)
+    }
   },
   components: {
     // HelloWorld
