@@ -3,16 +3,27 @@ export const Store = {
     state: () => ({
         product_list: [
             // { name: 'a module' }
-        ]
+        ],
+        selected_product_id : null
     }),
     getters: {
         get(state) {
             return state.product_list
+        },
+        // product_poup() {
+
+        // },
+        getProductById: (state) => (id) => {
+            return state.product_list.find(product => product.id === id)
         }
+
     },
     mutations: {
         ADD_PRODUCTS(state, payload) {
             state.product_list.push(...payload)
+        },
+        SET_SELECTED_PRODUCT_ID(state, payload){
+            state.selected_product_id = payload
         }
     },
     actions: {
@@ -30,7 +41,11 @@ export const Store = {
                 })
                 .finally(() => this.loading = false)
             // console.log("dt :", dt);
+        },
+        setSelected_product_id(contex, payload){
+            contex.commit('SET_SELECTED_PRODUCT_ID', payload)     
         }
+
     },
     modules: {},
 }

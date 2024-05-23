@@ -68,6 +68,10 @@
                   <span class="text-dark">$18</span>
                   <span class="text-decoration-line-through text-muted">$24</span>
                 </div>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+                @click="showProductDetails(item.id)" >
+                  Launch demo modal
+                </button>
                 <!-- btn -->
                 <div>
                   <a href="#!" class="btn btn-primary btn-sm">
@@ -88,6 +92,7 @@
       </div>
     </div>
 
+    <ProductDetailPopup  :product="selectedProduct">a</ProductDetailPopup>
   </div>
 </template>
 
@@ -96,6 +101,7 @@
 
 import axios from 'axios';
 import Vue from 'vue'
+import ProductDetailPopup from './ProductDetailPopup.vue';
 Vue.prototype.$_var_1_name = 'My App'
 
 export default {
@@ -116,21 +122,14 @@ export default {
     getProducts() {
       // console.log("this.$store.getters.get:", this.$store.getters.get);
       return this.$store.getters.get
+    },
+    selectedProduct(){
+      return this.$store.getters.getProductById
     }
   },
   beforeCreate: function () {
-    // Vue.prototype.$_var_2_name = 'My App'
-    // console.log("beforeCreate this :", this)
-    // console.log("Vue.prototype :", Vue.prototype)
-    // console.log(this.$appName)
   },
   created() {
-    // Vue.prototype.$_var_3_name = 'My App'
-
-    // console.log("created this :", this)
-    // console.log("created this ($_var_3_name) :", this.$_var_3_name)
-    // console.log("Vue.prototype :", Vue.prototype)
-    // console.log("Vue.prototype ($_var_3_name) :", Vue.prototype.$_var_3_name)
   },
   mounted() {
     console.log("mounted");
@@ -196,6 +195,7 @@ export default {
   },
   components: {
     // HelloWorld
+    ProductDetailPopup
   },
   watch: {
     name(newName) {
