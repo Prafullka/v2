@@ -93,7 +93,7 @@
       </div>
     </div>
 
-    <ProductDetailPopup  :product="selectedProduct()">a</ProductDetailPopup>
+    <ProductDetailPopup  :product="selectedProduct">a</ProductDetailPopup>
   </div>
 </template>
 
@@ -125,7 +125,8 @@ export default {
       return this.$store.getters.get
     },
     selectedProduct(){
-      return this.$store.getters.getProductById
+      const productId = this.$store.state.selected_product_id;
+      return this.$store.getters.getProductById(productId)
     }
   },
   beforeCreate: function () {
