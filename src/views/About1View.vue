@@ -125,8 +125,11 @@ export default {
       return this.$store.getters.get
     },
     selectedProduct(){
-      const productId = this.$store.state.selected_product_id;
-      return this.$store.getters.getProductById(productId)
+      // const productId = this.$store.state.selected_product_id;
+      // let product = this.$store.getters.getProductById(productId)
+      let product = this.$store.getters.getProductById
+      console.log("product :", product);
+      return product
     }
   },
   beforeCreate: function () {
@@ -195,7 +198,11 @@ export default {
       }
     },
     setSelected_product_id(id){
+      console.group("setSelected_product_id");
+      console.log("setSelected_product_id :", id);
       this.$store.dispatch('setSelected_product_id',id)
+      console.groupEnd("setSelected_product_id");
+
     }
   },
   components: {
