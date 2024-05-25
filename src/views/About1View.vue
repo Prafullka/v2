@@ -162,7 +162,11 @@ export default {
     } else {
       this.$store.dispatch('add_products')
     }
+    console.log("this :", this);
+    console.log("this.$route :", this.$route);
   },
+
+ 
   //   props:{},
   methods: {
     hadleClick() {

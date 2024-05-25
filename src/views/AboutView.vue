@@ -5,9 +5,9 @@
   </div>
 </template>
 <script>
-  import NavBar from "@/components/NavBar.vue";
+  // import NavBar from "@/components/NavBar.vue";
 
-  console.log("NavBar", NavBar);
+  // console.log("NavBar", NavBar);
   export default{
     name:'AboutView',
     components:{

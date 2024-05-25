@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <NavBar/>
+    <NavBar />
     <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/about1">About1</router-link> 
-    </nav> -->
-    <router-view/>
+    </nav> 
+  -->
+    <router-view />
   </div>
 </template>
 <script>
-  import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
 
-export default{
-  components:{
+export default {
+  components: {
     NavBar
   }
 }
@@ -38,5 +39,4 @@ export default{
 //       color: #42b983;
 //     }
 //   }
-// }
-</style>
+// }</style>
